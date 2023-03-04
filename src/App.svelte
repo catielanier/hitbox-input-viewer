@@ -22,9 +22,9 @@
 
 <main>
 	{#if Object.keys(gamepads).length}
-	<div class="hitbox-grid">
-
-	</div>
+		<div class="hitbox-grid">
+			
+		</div>
 	{:else}
 		<p>Please connect a gamepad.</p>
 	{/if}
@@ -38,12 +38,13 @@
 		margin: 0 auto;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.hitbox-grid {
+		width: 100%;
+		display: grid;
+		grid-template-rows: repeat(105, 1fr);
+		grid-template-columns: repeat(172, 1fr);
 	}
+
 
 	@media (min-width: 640px) {
 		main {
