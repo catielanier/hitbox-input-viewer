@@ -76,8 +76,8 @@
 	.hitbox-grid {
 		width: 100%;
 		display: grid;
-		grid-template-rows: repeat(108, 1fr);
-		grid-template-columns: repeat(196, 1fr);
+		grid-template-rows: repeat(108, 5px);
+		grid-template-columns: repeat(196, 5px);
 	}
 
 	.hitbox-grid > div {
@@ -85,79 +85,86 @@
 		height: 5px;
 	}	
 
+	#hitbox-left {
+		grid-column-start: 1;
+		grid-column-end: 24;
+		grid-row-start: 12;
+		grid-row-end: 35;
+	}
+
 	#hitbox-down {
-		grid-column-start: 5;
-		grid-column-end: 28;
+		grid-column-start: 29;
+		grid-column-end: 52;
 		grid-row-start: 12;
 		grid-row-end: 35;
 	}
 
 	#hitbox-right {
-		grid-column-start: 30;
-		grid-column-end: 53;
+		grid-column-start: 54;
+		grid-column-end: 77;
 		grid-row-start: 26;
 		grid-row-end: 49;
 	}
 
 	#hitbox-up {
-		grid-column-start: 45;
-		grid-column-end: 74;
+		grid-column-start: 69;
+		grid-column-end: 98;
 		grid-row-start: 79;
 		grid-row-end: 105;
 	}
 
 	#hitbox-jab {
-		grid-column-start: 67;
-		grid-column-end: 90;
+		grid-column-start: 91;
+		grid-column-end: 114;
 		grid-row-start: 15;
 		grid-row-end: 43;
 	}
 
 	#hitbox-short {
-		grid-column-start: 67;
-		grid-column-end: 90;
+		grid-column-start: 91;
+		grid-column-end: 114;
 		grid-row-start: 44;
 		grid-row-end: 73;
 	}
 
 	#hitbox-strong {
-		grid-column-start: 92;
-		grid-column-end: 115;
+		grid-column-start: 116;
+		grid-column-end: 139;
 		grid-row-start: 1;
 		grid-row-end: 24;
 	}
 
 	#hitbox-forward {
-		grid-column-start: 92;
-		grid-column-end: 115;
+		grid-column-start: 116;
+		grid-column-end: 139;
 		grid-row-start: 30;
 		grid-row-end: 53;
 	}
 
 	#hitbox-fierce {
-		grid-column-start: 121;
-		grid-column-end: 144;
+		grid-column-start: 145;
+		grid-column-end: 168;
 		grid-row-start: 1;
 		grid-row-end: 24;
 	}
 
 	#hitbox-roundhouse {
-		grid-column-start: 121;
-		grid-column-end: 144;
+		grid-column-start: 145;
+		grid-column-end: 168;
 		grid-row-start: 30;
 		grid-row-end: 53;
 	}
 
 	#hitbox-3p {
-		grid-column-start: 149;
-		grid-column-end: 172;
+		grid-column-start: 173;
+		grid-column-end: 196;
 		grid-row-start: 8;
 		grid-row-end: 31;
 	}
 
 	#hitbox-3k {
-		grid-column-start: 149;
-		grid-column-end: 172;
+		grid-column-start: 173;
+		grid-column-end: 196;
 		grid-row-start: 37;
 		grid-row-end: 60;
 	}
