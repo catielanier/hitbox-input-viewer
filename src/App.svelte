@@ -172,19 +172,19 @@
 	.button-inner-24 {
 		width: 120px;
 		height: 120px;
-		border: 3px solid pink;
+		border: 5px solid black;
 		border-radius: 50%;
 	}
 
 	.button-inner-30 {
 		width: 150px;
 		height: 150px;
-		border: 3px solid pink;
+		border: 5px solid black;
 		border-radius: 50%;
 	}
 
 	.button-active-true {
-		background-color: white;
+		background-color: #5af;
 	}
 
 
