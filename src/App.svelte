@@ -2,7 +2,7 @@
 	import EmptyDivs from "./EmptyDivs.svelte";
 	$: haveEvents = 'ongamepadconnected' in window;
 	$: gamepads = {}
-	const removeGamepad = (index) => delete gamepads.index;
+	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
 		removeGamepad(e.gamepad.index);
 	})
