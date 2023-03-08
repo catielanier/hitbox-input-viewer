@@ -51,8 +51,8 @@
 			<div id="hitbox-short"><div class="button-inner-24 button-active-{gamepads[0].buttons[0].touched}" /></div>
 			<div id="hitbox-forward"><div class="button-inner-24 button-active-{gamepads[0].buttons[1].touched}" /></div>
 			<div id="hitbox-roundhouse"><div class="button-inner-24 button-active-{gamepads[0].buttons[7].touched}" /></div>
-			<div id="hitbox-3p"><div class="button-inner-24 button-active-false" /></div>
-			<div id="hitbox-3k"><div class="button-inner-24 button-active-false" /></div>
+			<div id="hitbox-3p"><div class="button-inner-24 button-active-{gamepads[0].buttons[4].touched}" /></div>
+			<div id="hitbox-3k"><div class="button-inner-24 button-active-{gamepads[0].buttons[6].touched}" /></div>
 			<EmptyDivs />
 		</div>
 	{:else}
