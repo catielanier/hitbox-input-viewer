@@ -1,7 +1,9 @@
 <script>
 	import EmptyDivs from "./EmptyDivs.svelte";
+  import controllers from "./lib/controllers";
 	$: haveEvents = 'ongamepadconnected' in window;
 	$: gamepads = {}
+	$: gamepadConfig = {}
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
 		removeGamepad(e.gamepad.index);
@@ -15,6 +17,9 @@
 				axes: gamepad.axes
 			}
 		}
+		gamepadConfig = controllers.find(controller => {
+			return controller.id === gamepad.id;
+		})
 	}
 	const scanGamepads = () => {
 		var detectedGamepads = navigator.getGamepads
@@ -41,18 +46,18 @@
 <main>
 	{#if Object.keys(gamepads).length}
 		<div class="hitbox-grid">
-			<div id="hitbox-up"><div class="button-inner-30 button-active-{gamepads[0].buttons[12].touched}" /></div>
-			<div id="hitbox-down"><div class="button-inner-24 button-active-{gamepads[0].buttons[13].touched}" /></div>
-			<div id="hitbox-left"><div class="button-inner-24 button-active-{gamepads[0].buttons[14].touched}" /></div>
-			<div id="hitbox-right"><div class="button-inner-24 button-active-{gamepads[0].buttons[15].touched}" /> </div>
-			<div id="hitbox-jab"><div class="button-inner-24 button-active-{gamepads[0].buttons[2].touched}" /></div>
-			<div id="hitbox-strong"><div class="button-inner-24 button-active-{gamepads[0].buttons[3].touched}" /></div>
-			<div id="hitbox-fierce"><div class="button-inner-24 button-active-{gamepads[0].buttons[5].touched}" /></div>
-			<div id="hitbox-short"><div class="button-inner-24 button-active-{gamepads[0].buttons[0].touched}" /></div>
-			<div id="hitbox-forward"><div class="button-inner-24 button-active-{gamepads[0].buttons[1].touched}" /></div>
-			<div id="hitbox-roundhouse"><div class="button-inner-24 button-active-{gamepads[0].buttons[7].touched}" /></div>
-			<div id="hitbox-3p"><div class="button-inner-24 button-active-{gamepads[0].buttons[4].touched}" /></div>
-			<div id="hitbox-3k"><div class="button-inner-24 button-active-{gamepads[0].buttons[6].touched}" /></div>
+			<div id="hitbox-up"><div class="button-inner-30 button-active-{gamepads[0].buttons[gamepadConfig.buttons.up].touched}" /></div>
+			<div id="hitbox-down"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.down].touched}" /></div>
+			<div id="hitbox-left"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.left].touched}" /></div>
+			<div id="hitbox-right"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.right].touched}" /> </div>
+			<div id="hitbox-jab"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.jab].touched}" /></div>
+			<div id="hitbox-strong"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.strong].touched}" /></div>
+			<div id="hitbox-fierce"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.fierce].touched}" /></div>
+			<div id="hitbox-short"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.short].touched}" /></div>
+			<div id="hitbox-forward"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.forward].touched}" /></div>
+			<div id="hitbox-roundhouse"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.roundhouse].touched}" /></div>
+			<div id="hitbox-3p"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.ppp].touched}" /></div>
+			<div id="hitbox-3k"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.kkk].touched}" /></div>
 			<EmptyDivs />
 		</div>
 	{:else}
