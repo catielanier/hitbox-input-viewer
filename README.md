@@ -2,7 +2,7 @@
 
 This is a (currently) very simple web app for showing your hitbox's inputs on stream. I hadn't been able to find one that didn't require Windows, and as a Linux user that primarily uses Proton + Steam to game now, wanted something that could work no matter what OS I boot into. This was made solely with Svelte, JS, and CSS, so it's also really lightweight.
 
-Currently, this only supports Brook UFB as an input source (also I've only tested by forcing Xbox 360 mode, given I'm a Linux user). Also, this only works with default mappings. PRs to detect and set other input devices, such as Cthulhu/PS360+/anything else that can be SOCD cleaned for hitbox usage, would be very welcome!
+Currently, this only supports Brook UFB as an input source (also I've currently only tested by forcing Xbox 360 and PS4 modes). Also, this only works with default mappings. PRs to detect and set other input devices, such as Cthulhu/PS360+/anything else that can be SOCD cleaned for hitbox usage, would be very welcome!
 
 ## Usage
 
