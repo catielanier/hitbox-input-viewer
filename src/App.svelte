@@ -3,7 +3,8 @@
   import controllers from "./lib/controllers";
 	$: haveEvents = 'ongamepadconnected' in window;
 	$: gamepads = {}
-	$: gamepadConfig = {}
+	$: gamepadConfig = undefined
+	$: isDirectionalButton = false;
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
 		removeGamepad(e.gamepad.index);
@@ -18,8 +19,11 @@
 			}
 		}
 		gamepadConfig = controllers.find(controller => {
-			return controller.id === gamepad.id;
+			return gamepad.id.indexOf(controller.id) !== -1;
 		})
+	}
+	$: if (gamepadConfig) {
+		isDirectionalButton = gamepadConfig.buttons.left.isButton;
 	}
 	const scanGamepads = () => {
 		var detectedGamepads = navigator.getGamepads
@@ -44,12 +48,12 @@
 </script>
 
 <main>
-	{#if Object.keys(gamepads).length}
+	{#if Object.keys(gamepads).length && gamepadConfig}
 		<div class="hitbox-grid">
-			<div id="hitbox-up"><div class="button-inner-30 button-active-{gamepads[0].buttons[gamepadConfig.buttons.up].touched}" /></div>
-			<div id="hitbox-down"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.down].touched}" /></div>
-			<div id="hitbox-left"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.left].touched}" /></div>
-			<div id="hitbox-right"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.right].touched}" /> </div>
+			<div id="hitbox-up"><div class="button-inner-30 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.up.index].touched : gamepads[0].axes[gamepadConfig.buttons.up.index] === gamepadConfig.buttons.up.value}" /></div>
+			<div id="hitbox-down"><div class="button-inner-24 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.down.index].touched : gamepads[0].axes[gamepadConfig.buttons.down.index] === gamepadConfig.buttons.down.value}" /></div>
+			<div id="hitbox-left"><div class="button-inner-24 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.left.index].touched : gamepads[0].axes[gamepadConfig.buttons.left.index] === gamepadConfig.buttons.left.value}" /></div>
+			<div id="hitbox-right"><div class="button-inner-24 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.right.index].touched : gamepads[0].axes[gamepadConfig.buttons.right.index] === gamepadConfig.buttons.right.value}" /> </div>
 			<div id="hitbox-jab"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.jab].touched}" /></div>
 			<div id="hitbox-strong"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.strong].touched}" /></div>
 			<div id="hitbox-fierce"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.fierce].touched}" /></div>
