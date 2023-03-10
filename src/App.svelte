@@ -4,10 +4,12 @@
 	$: haveEvents = 'ongamepadconnected' in window;
 	$: gamepads = {}
 	$: gamepadConfig = undefined
-	$: isDirectionalButton = false;
+	$: isDirectionalButton = undefined;
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
 		removeGamepad(e.gamepad.index);
+		gamepadConfig = undefined;
+		isDirectionalButton = undefined;
 	})
 	const addGamepad = (gamepad) => {
 		gamepads = {
@@ -22,7 +24,7 @@
 			return gamepad.id.indexOf(controller.id) !== -1;
 		})
 	}
-	$: if (gamepadConfig) {
+	$: if (gamepadConfig && !isDirectionalButton) {
 		isDirectionalButton = gamepadConfig.buttons.left.isButton;
 	}
 	const scanGamepads = () => {
@@ -39,7 +41,7 @@
 	}
 
 	$: if (!haveEvents) {
-		setInterval(scanGamepads, 50)
+		setInterval(scanGamepads, 50);
 	}
 
 	window.addEventListener("gamepadconnected", (e) => {
