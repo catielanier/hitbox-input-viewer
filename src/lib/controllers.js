@@ -97,6 +97,40 @@ const controllers = [
       },
     },
   },
+  {
+    id: "Brook POKKEN CONTROLLER",
+    label: "Brook UFB (Switch mode)",
+    buttons: {
+      jab: 0,
+      strong: 3,
+      fierce: 5,
+      short: 1,
+      forward: 2,
+      roundhouse: 7,
+      ppp: 4,
+      kkk: 6,
+      up: {
+        isButton: false,
+        index: 5,
+        value: -1,
+      },
+      down: {
+        isButton: false,
+        index: 5,
+        value: 1,
+      },
+      left: {
+        isButton: false,
+        index: 4,
+        value: -1,
+      },
+      right: {
+        isButton: false,
+        index: 4,
+        value: 1,
+      },
+    },
+  },
 ];
 
 export default controllers;
