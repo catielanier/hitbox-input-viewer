@@ -16,6 +16,12 @@
 	$: inputConfigSetupOngoing = false;
 	$: customUrlRetrievalWindowOpen = false;
 	$: buttonBorderStyle = `border-color: ${buttonRimColour};`
+	let customRimColour;
+	let customInactiveColour;
+	let customActiveColour;
+	let hasInactiveColour = false;
+	let customUrlParams = ['hideConifg=true'];
+	let customUrl;
 	const crypto = 'cheaterlikesamir';
 	const queryParams = new URLSearchParams(window.location.search);
 	const hideConfigParam = queryParams.get('hideConfig');
@@ -39,6 +45,20 @@
 				}
 				return 'background-color: none';
 		}
+	}
+	const saveCustomColours = () => {
+		buttonRimColour = customRimColour;
+		buttonActiveColour = customActiveColour;
+		buttonInactiveColour = hasInactiveColour ? customInactiveColour : undefined;
+	}
+	const setCustomButtonLayout = () => {
+
+	}
+	const generateCustomURL = () => {
+		const options = CryptoJS.AES.encrypt(JSON.stringify({ gamepadConfig, buttonActiveColour, buttonInactiveColour, buttonRimColour }), crypto).toString();
+		customUrlParams[1] = `options=${options}`;
+		const params = customUrlParams.join('&');
+		return `https://hitbox-input-viewer.vercel.app/?${params}`;
 	}
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
