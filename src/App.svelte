@@ -5,6 +5,22 @@
 	$: gamepads = {}
 	$: gamepadConfig = undefined
 	$: isDirectionalButton = undefined;
+	$: buttonActiveColour = '#5af'
+	$: buttonRimColour = 'white';
+	$: buttonInactiveColour = undefined;
+	$: buttonStyleWindowOpen = false;
+	$: buttonBorderStyle = `border-color: ${buttonRimColour};`
+	const changeButtonInnerStyle = (isButtonTouched) => {
+		switch (isButtonTouched) {
+			case true:
+				return `background-color: ${buttonActiveColour};`
+			default:
+				if (buttonInactiveColour) {
+					return `background-color: ${buttonInactiveColour}`;
+				}
+				return 'background-color: none';
+		}
+	}
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
 		removeGamepad(e.gamepad.index);
@@ -28,12 +44,12 @@
 		isDirectionalButton = gamepadConfig.buttons.left.isButton;
 	}
 	const scanGamepads = () => {
-		var detectedGamepads = navigator.getGamepads
+		const detectedGamepads = navigator.getGamepads
       ? navigator.getGamepads()
       : navigator.webkitGetGamepads
       ? navigator.webkitGetGamepads()
       : []
-    for (var i = 0; i < detectedGamepads.length; i++) {
+    for (let i = 0; i < detectedGamepads.length; i++) {
       if (detectedGamepads[i]) {
         addGamepad(detectedGamepads[i])
       }
@@ -52,18 +68,18 @@
 <main>
 	{#if Object.keys(gamepads).length && gamepadConfig}
 		<div class="hitbox-grid">
-			<div id="hitbox-up"><div class="button-inner-30 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.up.index].touched : gamepads[0].axes[gamepadConfig.buttons.up.index] === gamepadConfig.buttons.up.value}" /></div>
-			<div id="hitbox-down"><div class="button-inner-24 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.down.index].touched : gamepads[0].axes[gamepadConfig.buttons.down.index] === gamepadConfig.buttons.down.value}" /></div>
-			<div id="hitbox-left"><div class="button-inner-24 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.left.index].touched : gamepads[0].axes[gamepadConfig.buttons.left.index] === gamepadConfig.buttons.left.value}" /></div>
-			<div id="hitbox-right"><div class="button-inner-24 button-active-{isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.right.index].touched : gamepads[0].axes[gamepadConfig.buttons.right.index] === gamepadConfig.buttons.right.value}" /> </div>
-			<div id="hitbox-jab"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.jab].touched}" /></div>
-			<div id="hitbox-strong"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.strong].touched}" /></div>
-			<div id="hitbox-fierce"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.fierce].touched}" /></div>
-			<div id="hitbox-short"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.short].touched}" /></div>
-			<div id="hitbox-forward"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.forward].touched}" /></div>
-			<div id="hitbox-roundhouse"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.roundhouse].touched}" /></div>
-			<div id="hitbox-3p"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.ppp].touched}" /></div>
-			<div id="hitbox-3k"><div class="button-inner-24 button-active-{gamepads[0].buttons[gamepadConfig.buttons.kkk].touched}" /></div>
+			<div id="hitbox-up"><div class="button-inner-30" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.up.index].touched : gamepads[0].axes[gamepadConfig.buttons.up.index] === gamepadConfig.buttons.up.value)}" /></div>
+			<div id="hitbox-down"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.down.index].touched : gamepads[0].axes[gamepadConfig.buttons.down.index] === gamepadConfig.buttons.down.value)}" /></div>
+			<div id="hitbox-left"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.left.index].touched : gamepads[0].axes[gamepadConfig.buttons.left.index] === gamepadConfig.buttons.left.value)}" /></div>
+			<div id="hitbox-right"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.right.index].touched : gamepads[0].axes[gamepadConfig.buttons.right.index] === gamepadConfig.buttons.right.value)}" /> </div>
+			<div id="hitbox-jab"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.jab].touched)}" /></div>
+			<div id="hitbox-strong"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.strong].touched)}" /></div>
+			<div id="hitbox-fierce"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.fierce].touched)}" /></div>
+			<div id="hitbox-short"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.short].touched)}" /></div>
+			<div id="hitbox-forward"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.forward].touched)}" /></div>
+			<div id="hitbox-roundhouse"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.roundhouse].touched)}" /></div>
+			<div id="hitbox-3p"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.ppp].touched)}" /></div>
+			<div id="hitbox-3k"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(gamepads[0].buttons[gamepadConfig.buttons.kkk].touched)}" /></div>
 			<EmptyDivs />
 		</div>
 	{:else}
@@ -181,21 +197,14 @@
 	.button-inner-24 {
 		width: 120px;
 		height: 120px;
-		border: 5px solid white;
 		border-radius: 50%;
 	}
 
 	.button-inner-30 {
 		width: 150px;
 		height: 150px;
-		border: 5px solid white;
 		border-radius: 50%;
 	}
-
-	.button-active-true {
-		background-color: #5af;
-	}
-
 
 	@media (min-width: 640px) {
 		main {
