@@ -1,4 +1,6 @@
 <script>
+	import Fa from 'svelte-fa';
+	import CryptoJS from 'crypto-js'
 	import EmptyDivs from "./EmptyDivs.svelte";
   import controllers from "./lib/controllers";
 	$: haveEvents = 'ongamepadconnected' in window;
@@ -9,7 +11,23 @@
 	$: buttonRimColour = 'white';
 	$: buttonInactiveColour = undefined;
 	$: buttonStyleWindowOpen = false;
+	$: inputConfigWindowOpen = false;
+	$: inputConfigSetupOngoing = false;
+	$: customUrlRetrievalWindowOpen = false;
 	$: buttonBorderStyle = `border-color: ${buttonRimColour};`
+	const crypto = 'cheaterlikesamir';
+	const queryParams = new URLSearchParams(window.location.search);
+	const hideConfigParam = queryParams.get('hideConfig');
+	const encryptedOptions = queryParams.get('options');
+	if (encryptedOptions) {
+		const bytes = CryptoJS.AES.decrypt(encryptedOptions, crypto);
+		const obj = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+		gamepadConfig = obj.gamepadConfig;
+		buttonActiveColour = obj.buttonActiveColour;
+		buttonInactiveColour = obj.buttonInactiveColour;
+		buttonRimColour = obj.buttonRimColour;
+	}
+	const hideConfig = hideConfigParam ? hideConfigParam === 'true' : false;
 	const changeButtonInnerStyle = (isButtonTouched) => {
 		switch (isButtonTouched) {
 			case true:
@@ -67,6 +85,9 @@
 
 <main>
 	{#if Object.keys(gamepads).length && gamepadConfig}
+		{#if !hideConfig}
+			<div class="config-buttons"><button></button></div>
+		{/if}
 		<div class="hitbox-grid">
 			<div id="hitbox-up"><div class="button-inner-30" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.up.index].touched : gamepads[0].axes[gamepadConfig.buttons.up.index] === gamepadConfig.buttons.up.value)}" /></div>
 			<div id="hitbox-down"><div class="button-inner-24" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.down.index].touched : gamepads[0].axes[gamepadConfig.buttons.down.index] === gamepadConfig.buttons.down.value)}" /></div>
