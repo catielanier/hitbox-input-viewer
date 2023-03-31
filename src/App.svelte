@@ -1,7 +1,14 @@
 <script>
 	import Fa from 'svelte-fa';
 	import CryptoJS from 'crypto-js'
-	import {faPalette, faGear, faLink} from '@fortawesome/free-solid-svg-icons'
+	import {
+		faPalette, 
+		faGear, 
+		faLink,
+		faFloppyDisk,
+		faXmark,
+		faCopy
+	} from '@fortawesome/free-solid-svg-icons'
 	import EmptyDivs from "./EmptyDivs.svelte";
   import controllers from "./lib/controllers";
 	$: haveEvents = 'ongamepadconnected' in window;
@@ -54,11 +61,14 @@
 	const setCustomButtonLayout = () => {
 
 	}
+	const copyUrlToClipboard = () => {
+		navigator.clipboard.writeText(customUrl);
+	}
 	const generateCustomURL = () => {
 		const options = CryptoJS.AES.encrypt(JSON.stringify({ gamepadConfig, buttonActiveColour, buttonInactiveColour, buttonRimColour }), crypto).toString();
 		customUrlParams[1] = `options=${options}`;
 		const params = customUrlParams.join('&');
-		return `https://hitbox-input-viewer.vercel.app/?${params}`;
+		customUrl = `https://hitbox-input-viewer.vercel.app/?${params}`;
 	}
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
@@ -107,7 +117,20 @@
 <main>
 	{#if Object.keys(gamepads).length && gamepadConfig}
 		{#if !hideConfig}
-			<div class="config-buttons"><button on:click={() => {buttonStyleWindowOpen = true;}}><Fa icon={faPalette} /></button> <button on:click={() => {inputConfigWindowOpen = true;}}><Fa icon={faGear} /></button> <button on:click={() => {customUrlRetrievalWindowOpen = true}}><Fa icon={faLink} /></button></div>
+			<div class="config-buttons">
+				<button on:click={() => {buttonStyleWindowOpen = true;}}>
+					<Fa icon={faPalette} />
+				</button>
+				<button on:click={() => {inputConfigWindowOpen = true;}}>
+					<Fa icon={faGear} />
+				</button>
+				<button on:click={() => {
+					generateCustomURL();
+					customUrlRetrievalWindowOpen = true;
+				}}>
+					<Fa icon={faLink} />
+				</button>
+			</div>
 		{/if}
 		<div class="hitbox-grid">
 			<div id="hitbox-up"><div class="button-inner-30" style="{buttonBorderStyle} {changeButtonInnerStyle(isDirectionalButton ? gamepads[0].buttons[gamepadConfig.buttons.up.index].touched : gamepads[0].axes[gamepadConfig.buttons.up.index] === gamepadConfig.buttons.up.value)}" /></div>
