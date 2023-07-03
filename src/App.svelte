@@ -1,6 +1,7 @@
 <script>
 	import Fa from 'svelte-fa';
 	import CryptoJS from 'crypto-js'
+	import { HsvPicker } from 'svelte-color-picker';
 	import {
 		faPalette, 
 		faGear, 
@@ -15,8 +16,8 @@
 	$: gamepads = {}
 	$: gamepadConfig = undefined
 	$: isDirectionalButton = undefined;
-	$: buttonActiveColour = '#5af'
-	$: buttonRimColour = 'white';
+	$: buttonActiveColour = '#55aaff'
+	$: buttonRimColour = '#ffffff';
 	$: buttonInactiveColour = undefined;
 	$: buttonStyleWindowOpen = false;
 	$: inputConfigWindowOpen = false;
@@ -53,23 +54,30 @@
 				return 'background-color: none';
 		}
 	}
+
 	const saveCustomColours = () => {
-		buttonRimColour = customRimColour;
-		buttonActiveColour = customActiveColour;
-		buttonInactiveColour = hasInactiveColour ? customInactiveColour : undefined;
+		buttonRimColour = customRimColour ?? buttonRimColour;
+		buttonActiveColour = customActiveColour ?? customActiveColour;
+		buttonInactiveColour = hasInactiveColour ? customInactiveColour ?? buttonInactiveColour : undefined;
+		buttonStyleWindowOpen = false;
 	}
+
 	const setCustomButtonLayout = () => {
 
 	}
-	const copyUrlToClipboard = () => {
-		navigator.clipboard.writeText(customUrl);
-	}
+
 	const generateCustomURL = () => {
 		const options = CryptoJS.AES.encrypt(JSON.stringify({ gamepadConfig, buttonActiveColour, buttonInactiveColour, buttonRimColour }), crypto).toString();
 		customUrlParams[1] = `options=${options}`;
 		const params = customUrlParams.join('&');
 		customUrl = `https://hitbox-input-viewer.vercel.app/?${params}`;
+		copyUrlToClipboard();
 	}
+
+	const copyUrlToClipboard = () => {
+		navigator.clipboard.writeText(customUrl);
+	}
+
 	const removeGamepad = (index) => delete gamepads[index];
 	window.addEventListener("gamepaddisconnected", (e) => {
 		removeGamepad(e.gamepad.index);
@@ -91,6 +99,26 @@
 	}
 	$: if (gamepadConfig && !isDirectionalButton) {
 		isDirectionalButton = gamepadConfig.buttons.left.isButton;
+	}
+	const convertRgbToHex = ({r, g, b}) => {
+		return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+	}
+	const setCustomRimColour = (rgba) => {
+		const {r, g, b} = rgba.detail;
+		const hex = convertRgbToHex({r, g, b});
+		customRimColour = hex
+	}
+
+	const setCustomActiveColour = (rgba) => {
+		const {r, g, b} = rgba.detail;
+		const hex = convertRgbToHex({r, g, b});
+		customActiveColour = hex
+	}
+
+	const setCustomInactiveColour = (rgba) => {
+		const {r, g, b} = rgba.detail;
+		const hex = convertRgbToHex({r, g, b});
+		customInactiveColour = hex
 	}
 	const scanGamepads = () => {
 		const detectedGamepads = navigator.getGamepads
@@ -130,6 +158,18 @@
 				}}>
 					<Fa icon={faLink} />
 				</button>
+			</div>
+		{/if}
+		{#if buttonStyleWindowOpen}
+			<div class="button-style-modal">
+				Rim: <HsvPicker startColor={buttonRimColour} on:colorChange={setCustomRimColour} />
+				Unpressed: <HsvPicker startColor={buttonRimColour} on:colorChange={setCustomInactiveColour} />
+				<input type="checkbox" bind:checked={hasInactiveColour} /> Use inactive colouring
+				{#if hasInactiveColour}
+				<span>Pressed: <HsvPicker startColor={buttonRimColour} on:colorChange={setCustomActiveColour} /></span>
+				{/if}
+				<button on:click={saveCustomColours}><Fa icon={faFloppyDisk} /></button>
+				<button on:click={() => buttonStyleWindowOpen = false}><Fa icon={faXmark} /></button>
 			</div>
 		{/if}
 		<div class="hitbox-grid">
@@ -269,6 +309,15 @@
 		width: 150px;
 		height: 150px;
 		border-radius: 50%;
+	}
+
+	.button-style-modal {
+		position: absolute;
+		background: #fff;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
 	}
 
 	button {

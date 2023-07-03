@@ -16,6 +16,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "crypto-js": "^4.1.1",
+    "svelte-color-picker": "^1.0.7",
     "svelte-fa": "^3.0.3"
   }
 }
