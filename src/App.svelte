@@ -7,8 +7,7 @@
 		faGear, 
 		faLink,
 		faFloppyDisk,
-		faXmark,
-		faCopy
+		faXmark
 	} from '@fortawesome/free-solid-svg-icons'
 	import EmptyDivs from "./EmptyDivs.svelte";
   import controllers from "./lib/controllers";
@@ -22,7 +21,6 @@
 	$: buttonStyleWindowOpen = false;
 	$: inputConfigWindowOpen = false;
 	$: inputConfigSetupOngoing = false;
-	$: customUrlRetrievalWindowOpen = false;
 	$: buttonBorderStyle = `border-color: ${buttonRimColour};`
 	let customRimColour;
 	let customInactiveColour;
@@ -133,6 +131,33 @@
     }
 	}
 
+	const customConfigKeys = ["up", "down", "left", "right", "jab", "strong", "fierce", "short", "forward", "roundhouse", "ppp", "kkk"];
+	$: customKeyPos = 0;
+	const customConfig = {};
+
+	$: while (inputConfigWindowOpen && customKeyPos < customConfigKeys.length) {
+		const buttonIndex = gamepads[0].buttons.findIndex(button => button.touched);
+		if (buttonIndex > -1) {
+			if (['up', 'down', 'left', 'right'].includes(customConfigKeys[customKeyPos])) {
+				customConfig[customConfigKeys[customKeyPos]] = {
+					isButton: true,
+					index: buttonIndex
+				}
+			} else {
+				customConfig[customConfigKeys[customKeyPos]] = buttonIndex
+			}
+			customKeyPos += 1
+		} else {
+			const axisIndex = gamepads[0].axes.findIndex(axis => axis === -1 || axis === 1);
+			customConfig[customConfigKeys[customKeyPos]] = {
+				isButton: false,
+				index: axisIndex,
+				value: gamepads[0].axes[axisIndex]
+			} 
+			customKeyPos += 1
+		}
+	}
+
 	$: if (!haveEvents) {
 		setInterval(scanGamepads, 50);
 	}
@@ -154,7 +179,6 @@
 				</button>
 				<button on:click={() => {
 					generateCustomURL();
-					customUrlRetrievalWindowOpen = true;
 				}}>
 					<Fa icon={faLink} />
 				</button>
