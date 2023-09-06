@@ -20,7 +20,6 @@
 	$: buttonInactiveColour = undefined;
 	$: buttonStyleWindowOpen = false;
 	$: inputConfigWindowOpen = false;
-	$: inputConfigSetupOngoing = false;
 	$: buttonBorderStyle = `border-color: ${buttonRimColour};`
 	let customRimColour;
 	let customInactiveColour;
@@ -174,7 +173,10 @@
 				<button on:click={() => {buttonStyleWindowOpen = true;}}>
 					<Fa icon={faPalette} />
 				</button>
-				<button on:click={() => {inputConfigWindowOpen = true;}}>
+				<button on:click={() => {
+					inputConfigWindowOpen = true;
+					customKeyPos = 0;
+				}}>
 					<Fa icon={faGear} />
 				</button>
 				<button on:click={() => {
