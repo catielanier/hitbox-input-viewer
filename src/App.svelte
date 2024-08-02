@@ -61,14 +61,14 @@
 	}
 
 	const setCustomButtonLayout = () => {
-
+		gamepadConfig = customConfig;
 	}
 
 	const generateCustomURL = () => {
 		const options = CryptoJS.AES.encrypt(JSON.stringify({ gamepadConfig, buttonActiveColour, buttonInactiveColour, buttonRimColour }), crypto).toString();
 		customUrlParams[1] = `options=${options}`;
 		const params = customUrlParams.join('&');
-		customUrl = `https://hitbox-input-viewer.vercel.app/?${params}`;
+		customUrl = `https://hitbox.catielanier.ca/?${params}`;
 		copyUrlToClipboard();
 	}
 
