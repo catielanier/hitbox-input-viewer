@@ -25,12 +25,13 @@
 	let customInactiveColour;
 	let customActiveColour;
 	let hasInactiveColour = false;
-	let customUrlParams = ['hideConifg=true'];
+	let customUrlParams = ['hideConifg=true', 'isStreamOverlay=true'];
 	let customUrl;
 	const crypto = 'cheaterlikesamir';
 	const queryParams = new URLSearchParams(window.location.search);
 	const hideConfigParam = queryParams.get('hideConfig');
 	const encryptedOptions = queryParams.get('options');
+	const isStreamOverlay = queryParams.get('isStreamOverlay') || false;
 	if (encryptedOptions) {
 		const bytes = CryptoJS.AES.decrypt(encryptedOptions, crypto);
 		const obj = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
@@ -166,7 +167,7 @@
 	})
 </script>
 
-<main>
+<main class={isStreamOverlay ? 'stream-overlay' : ''} style="background: #999">
 	{#if Object.keys(gamepads).length && gamepadConfig}
 		{#if !hideConfig}
 			<div class="config-buttons">
@@ -227,6 +228,10 @@
 		max-height: 720px;
 		height: 100vh;
 		margin: 0 auto;
+	}
+
+	main.stream-overlay {
+		background: none !important;
 	}
 
 	.hitbox-grid {
