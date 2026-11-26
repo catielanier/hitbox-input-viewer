@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+web/node_modules/
+web/dist/
+*.exe
+.DS_Store
