@@ -1,0 +1,137 @@
+{
+  "name": "GuileKeys GF-16/GK-16 GP2040-CE XInput",
+  "version": 1,
+  "coordinateSystem": {
+    "viewBox": "170 115 650 440"
+  },
+  "buttons": [
+    {
+      "id": "m1",
+      "label": "M1",
+      "input": "l3",
+      "x": 333,
+      "y": 174,
+      "r": 39
+    },
+    {
+      "id": "r3",
+      "label": "R3",
+      "input": "r3",
+      "x": 489,
+      "y": 172,
+      "r": 39
+    },
+    {
+      "id": "left",
+      "label": "Left",
+      "input": "left",
+      "x": 220,
+      "y": 255,
+      "r": 39
+    },
+    {
+      "id": "down",
+      "label": "Down",
+      "input": "down",
+      "x": 318,
+      "y": 255,
+      "r": 39
+    },
+    {
+      "id": "right",
+      "label": "Right",
+      "input": "right",
+      "x": 395,
+      "y": 290,
+      "r": 39
+    },
+    {
+      "id": "1p",
+      "label": "1P",
+      "input": "1p",
+      "x": 480,
+      "y": 252,
+      "r": 39
+    },
+    {
+      "id": "2p",
+      "label": "2P",
+      "input": "2p",
+      "x": 563,
+      "y": 214,
+      "r": 39
+    },
+    {
+      "id": "3p",
+      "label": "3P",
+      "input": "3p",
+      "x": 656,
+      "y": 215,
+      "r": 39
+    },
+    {
+      "id": "4p",
+      "label": "4P",
+      "input": "4p",
+      "x": 749,
+      "y": 214,
+      "r": 39
+    },
+    {
+      "id": "1k",
+      "label": "1K",
+      "input": "1k",
+      "x": 480,
+      "y": 345,
+      "r": 39
+    },
+    {
+      "id": "2k",
+      "label": "2K",
+      "input": "2k",
+      "x": 563,
+      "y": 301,
+      "r": 39
+    },
+    {
+      "id": "3k",
+      "label": "3K",
+      "input": "3k",
+      "x": 663,
+      "y": 301,
+      "r": 39
+    },
+    {
+      "id": "4k",
+      "label": "4K",
+      "input": "4k",
+      "x": 760,
+      "y": 306,
+      "r": 39
+    },
+    {
+      "id": "l3",
+      "label": "L3",
+      "input": "l3",
+      "x": 535,
+      "y": 414,
+      "r": 39
+    },
+    {
+      "id": "m2",
+      "label": "M2",
+      "input": "r3",
+      "x": 348,
+      "y": 485,
+      "r": 39
+    },
+    {
+      "id": "up",
+      "label": "Up",
+      "input": "up",
+      "x": 445,
+      "y": 484,
+      "r": 48
+    }
+  ]
+}
